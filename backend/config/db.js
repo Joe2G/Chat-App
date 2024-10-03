@@ -2,11 +2,11 @@ require('dotenv').config();
 const { Sequelize } = require('sequelize');
 
 const sequelize = new Sequelize(
-  process.env.DATABASE_NAME,
-  process.env.DATABASE_USER,
-  process.env.DATABASE_PASSWORD, {
-  host: process.env.DATABASE_HOST,
-  port: process.env.DATABASE_PORT,
+  DATABASE_NAME = 'if0_37434872_XXX',
+  DATABASE_USER = 'if0_37434872',
+  DATABASE_PASSWORD = 'zVHGQMVtR6K', {
+  host: 'sql305.infinityfree.com',
+  port: 3306,
   dialect: 'mysql',
   logging: false,
   pool: {

@@ -15,7 +15,9 @@ const PORT = 3000;
 const path = require('path');
 
 // Middleware to handle CORS and JSON requests
-app.use(cors());
+app.use(cors({
+  origin: "https://joe2g.github.io/Chat-App/"
+}));
 app.use(express.json());
 
 // Initialize database connection
