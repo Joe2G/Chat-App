@@ -59,15 +59,13 @@ export default function Sidebar({ onSelectChat }) {
         try {
           const response = await fetch(`http://localhost:3000/api/users/${sender.id}/chats/last-messages`);
           const chats = await response.json();
-          if (!response.ok) throw new Error(chats.message); // Handle non-200 responses
           setUserChats(chats);
         } catch (error) {
           console.error('Error fetching user chats:', error);
         }
-      } else {
-        console.warn('Sender ID is undefined');
       }
     };
+
     fetchUserChats();
   }, [sender.id]);
 
