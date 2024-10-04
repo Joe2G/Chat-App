@@ -25,8 +25,6 @@ export default function Sidebar({ onSelectChat }) {
     });
   };
 
-  const apiUrl = process.env.REACT_APP_API_URL || 'http://localhost:3000';
-
   const handleDeleteChat = async (chatId) => {
     try {
       const response = await fetch(`${apiUrl}/api/chats/${chatId}`, {
@@ -59,7 +57,7 @@ export default function Sidebar({ onSelectChat }) {
     const fetchUserChats = async () => {
       if (sender.id) {
         try {
-          const response = await fetch(`${apiUrl}/api/users/${sender.id}/chats/last-messages`);
+          const response = await fetch(`https://chat-app-khaki-zeta.vercel.app/api/users/${sender.id}/chats/last-messages`);
           const chats = await response.json();
           setUserChats(chats);
         } catch (error) {

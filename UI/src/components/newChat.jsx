@@ -16,8 +16,7 @@ export default function NewChat() {
 
   const saveChat = async (chatId, userId) => {
     try {
-      const apiUrl = process.env.REACT_APP_API_URL || 'http://localhost:3000';
-      await fetch(`${apiUrl}/api/chats`, {
+      await fetch('https://chat-app-khaki-zeta.vercel.app/api/chats', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ chatId, userId }),
