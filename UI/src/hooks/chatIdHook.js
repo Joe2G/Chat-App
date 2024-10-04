@@ -1,7 +1,19 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
-export default function useChatIdHook() {
-    // For demonstration, we're just generating a random chat ID
-    const [chatId] = useState(`chat_${Math.floor(Math.random() * 1000)}`);
-    return chatId;
-}
+/**
+ * Custom hook to manage and sync chat ID.
+ *
+ * @param {string|null} selectedChatId - The currently selected chat ID.
+ * @returns {string|null} The current chat ID.
+ */
+const useChatIdHook = (selectedChatId) => {
+  const [chatId, setChatId] = useState(selectedChatId || null); // Default to null
+
+  useEffect(() => {
+    setChatId(selectedChatId);
+  }, [selectedChatId]);
+
+  return chatId;
+};
+
+export default useChatIdHook;
