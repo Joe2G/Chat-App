@@ -48,7 +48,7 @@ function App() {
   };
 
   return (
-    <Router> {/* Wrap the entire application with Router */}
+    <Router>
       <div className="flex h-screen">
         {(!selectedChatId || windowWidth > 768) && (
           <Sidebar messages={messages} onSelectChat={handleChatSelect} />

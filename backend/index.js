@@ -21,7 +21,7 @@ app.use(cors({
     "https://joe2g.github.io/Chat-App/",
     "https://chat-app-khaki-zeta.vercel.app"
   ],
-  methods: ['GET', 'POST', 'DELETE'], // Allow specific HTTP methods
+  methods: ['GET', 'POST', 'DELETE', 'PUT', 'PATCH', 'OPTIONS'], // Allow specific HTTP methods
   credentials: true, // Allow credentials if needed
 }));
 app.use(express.json());
