@@ -5,6 +5,7 @@ import useAppStore from '../stores/appStore'; // Import the useAppStore hook
 export default function useUsernameHook() {
   const [sender, setSender] = useState({ name: '', id: null });
   const { setModal } = useAppStore(); // Access the setModal function from useAppStore
+  const apiUrl = process.env.REACT_APP_API_URL || 'http://localhost:3000';
 
   useEffect(() => {
     const storedSender = localStorage.getItem('sender');
@@ -43,7 +44,7 @@ export default function useUsernameHook() {
             username: newSender.name,
             userId: newSender.id,
           };
-          fetch('http://localhost:3000/api/users', {
+          fetch(`${apiUrl}/api/users`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(newUser),

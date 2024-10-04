@@ -5,7 +5,7 @@ import useUsernameHook from '../hooks/usernameHook';
 export default function NewChat() {
   const { setModal } = useAppStore();
   const sender = useUsernameHook(); // Get the current user details
-  
+
   const VIP_PASSWORD = "PaSS?HAha"; // Replace with your actual VIP password
 
   const generateNewChatId = async () => {
@@ -16,11 +16,13 @@ export default function NewChat() {
 
   const saveChat = async (chatId, userId) => {
     try {
-      await fetch('http://localhost:3000/api/chats', {
+      const apiUrl = process.env.REACT_APP_API_URL || 'http://localhost:3000';
+      await fetch(`${apiUrl}/api/chats`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ chatId, userId }),
       });
+
     } catch (error) {
       console.error('Error saving chat:', error);
     }

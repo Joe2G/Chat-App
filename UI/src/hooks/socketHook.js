@@ -7,7 +7,9 @@ export default function useSocketHook(chatId) {
     useEffect(() => {
         if (chatId) {
             // Use the server's URL (update this with your server URL)
-            const newSocket = io("http://localhost:3000", { query: { chatId } });
+            const apiUrl = process.env.REACT_APP_API_URL || 'http://localhost:3000';
+            const newSocket = io(apiUrl, { query: { chatId } });
+
             setSocket(newSocket);
 
             // Clean up: disconnect the socket when the component unmounts or when chatId changes
