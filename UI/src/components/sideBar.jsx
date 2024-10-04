@@ -27,7 +27,7 @@ export default function Sidebar({ onSelectChat }) {
 
   const handleDeleteChat = async (chatId) => {
     try {
-      const response = await fetch(`${apiUrl}/api/chats/${chatId}`, {
+      const response = await fetch(`https://chat-app-khaki-zeta.vercel.app/api/chats/${chatId}`, {
         method: 'DELETE',
       });
       if (response.ok) {
