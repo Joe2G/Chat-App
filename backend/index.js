@@ -16,7 +16,13 @@ const path = require('path');
 
 // Middleware to handle CORS and JSON requests
 app.use(cors({
-  origin: ["https://joe2g.github.io/Chat-App/", "http://localhost:5173", "https://chat-app-khaki-zeta.vercel.app"], // Add allowed origins here
+  origin: [
+    "https://joe2g.github.io",
+    "https://joe2g.github.io/Chat-App/",
+    "https://chat-app-khaki-zeta.vercel.app"
+  ],
+  methods: ['GET', 'POST', 'DELETE'], // Allow specific HTTP methods
+  credentials: true, // Allow credentials if needed
 }));
 app.use(express.json());
 
