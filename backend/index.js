@@ -11,13 +11,13 @@ const path = require('path');
 const app = express();
 const server = http.createServer(app);
 const io = socketIO(server);
-const PORT = 3306;
+const PORT = 3000;
 
 // Allowed domains for CORS
 const allowedOrigins = [
   'https://joe2g.github.io',
   'https://joe2g.github.io/Chat-App/',
-  'https://chat-app-khaki-zeta.vercel.app/'
+  'https://chat-app-khaki-zeta.vercel.app/',
 ];
 
 app.use(cors({
@@ -28,7 +28,7 @@ app.use(cors({
       callback(new Error('Not allowed by CORS'));
     }
   },
-  credentials: true, // Enable this if your requests include credentials like cookies
+  credentials: true,
 }));
 
 // Handle preflight requests
