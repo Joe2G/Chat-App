@@ -13,7 +13,7 @@ export default function NewChat() {
   const generateNewChatId = async () => {
     const newChatId = uuidv4();
     await saveChat(newChatId, sender.id);
-    navigate(`/?chatId=${newChatId}`); // Use navigate to change the URL without reloading
+    navigate(`/Chat-App/?chatId=${newChatId}`); // Updated navigate call
   };
 
   const saveChat = async (chatId, userId) => {
@@ -58,7 +58,7 @@ export default function NewChat() {
 
         if (enteredPassword === VIP_PASSWORD && customChatId.trim().length >= 3) {
           await saveChat(customChatId.trim(), sender.id);
-          navigate(`/?chatId=${customChatId.trim()}`); // Use navigate instead of window.location.href
+          navigate(`/Chat-App/?chatId=${customChatId.trim()}`); // Updated navigate call
         } else if (customChatId.trim().length < 3) {
           alert('Chat ID must be at least 3 characters long');
         } else {

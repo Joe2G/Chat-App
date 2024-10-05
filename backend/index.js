@@ -16,9 +16,8 @@ const PORT = 3306;
 // Allowed domains for CORS
 const allowedOrigins = [
   'https://joe2g.github.io',
-  'https://chat-app-khaki-zeta.vercel.app',
-  'http://localhost:3000', // Allow localhost for development
-  'https://joe2g.github.io/Chat-App/'
+  'https://joe2g.github.io/Chat-App/',
+  'https://chat-app-khaki-zeta.vercel.app/'
 ];
 
 app.use(cors({

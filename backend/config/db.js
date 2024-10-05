@@ -1,29 +1,43 @@
-require('dotenv').config();
 const { Sequelize } = require('sequelize');
 
-const sequelize = new Sequelize(
-  process.env.DATABASE_NAME,
-  process.env.DATABASE_USER,
-  process.env.DATABASE_PASSWORD, {
-  host: process.env.DATABASE_HOST,
-  port: process.env.DATABASE_PORT,
+// Database connection details
+const DB_NAME = 'sql5735433'; // Database name
+const DB_USER = 'sql5735433'; // Database user
+const DB_PASSWORD = 'Vg4NaZUxVc'; // Database password
+const DB_HOST = 'sql5.freemysqlhosting.net'; // Database host
+const DB_PORT = 3306; // Database port
+
+// Sequelize instance
+const sequelize = new Sequelize(DB_NAME, DB_USER, DB_PASSWORD, {
+  host: DB_HOST,
+  port: DB_PORT,
   dialect: 'mysql',
   logging: false,
   pool: {
-    max: 5, // Maximum number of connections in the pool
-    min: 0, // Minimum number of connections in the pool
-    acquire: 30000, // Maximum time (in milliseconds) that pool will try to get connection before throwing error
-    idle: 10000 // Maximum time (in milliseconds) that a connection can be idle before being released
+    max: 5,
+    min: 0,
+    acquire: 30000,
+    idle: 10000
   }
 });
-
+// Database connection function
 async function dbConnect() {
   try {
     await sequelize.authenticate();
     console.log('Database connection has been established successfully.');
   } catch (error) {
-    console.error('Unable to connect to the database:', error);
-    // Add specific error handling based on error types
+    // Enhanced error handling
+    if (error instanceof Sequelize.ConnectionError) {
+      console.error('Database connection error:', error.message);
+    } else if (error instanceof Sequelize.HostNotFoundError) {
+      console.error('Database host not found:', error.message);
+    } else if (error instanceof Sequelize.InvalidConnectionError) {
+      console.error('Invalid database credentials:', error.message);
+    } else if (error instanceof Sequelize.TimeoutError) {
+      console.error('Database connection timeout:', error.message);
+    } else {
+      console.error('Unable to connect to the database:', error.message);
+    }
   }
 }
 
