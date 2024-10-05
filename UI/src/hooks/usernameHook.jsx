@@ -43,7 +43,7 @@ export default function useUsernameHook() {
             username: newSender.name,
             userId: newSender.id,
           };
-          fetch('https://chat-app-khaki-zeta.vercel.app/api/users', {
+          fetch('http://localhost:3000/api/users', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(newUser),
