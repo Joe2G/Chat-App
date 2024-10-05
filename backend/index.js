@@ -11,7 +11,7 @@ const path = require('path');
 const app = express();
 const server = http.createServer(app);
 const io = socketIO(server);
-const PORT = 3000;
+const port = 3000 || process.env.PORT;
 
 // Allowed domains for CORS
 const allowedOrigins = [
@@ -64,6 +64,6 @@ dbConnect()
   .catch(error => console.error('Error syncing database models:', error));
 
 // Start the server
-server.listen(PORT, () => {
-  console.log(`Server is running on port ${PORT}`);
+server.listen(port, () => {
+  console.log(`Server is running on port ${port}`);
 });
