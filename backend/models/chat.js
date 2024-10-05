@@ -3,7 +3,7 @@ const { DataTypes } = require('sequelize');
 
 const Chat = sequelize.define('Chat', {
   chatId: {
-    type: DataTypes.STRING,
+    type: DataTypes.STRING(191), // Specify length to match the database index limit
     allowNull: false,
     unique: true, // Ensure chat IDs are unique
   },
@@ -13,6 +13,9 @@ const Chat = sequelize.define('Chat', {
   },
 }, {
   timestamps: true, // Ensures createdAt and updatedAt fields are automatically added
+  // Optionally, customize the names of the timestamp fields
+  // createdAt: 'createdAt', 
+  // updatedAt: 'updatedAt',
 });
 
 module.exports = Chat;
