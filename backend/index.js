@@ -4,15 +4,8 @@ const cors = require('cors'); // Import the cors package
 const app = express();
 
 // Custom CORS middleware function with specific configurations
-app.use(cors({
-  origin: [
-    "https://joe2g.github.io",
-    "https://joe2g.github.io/Chat-App/",
-    "https://chat-app-khaki-zeta.vercel.app"
-  ],
-  methods: ['GET', 'POST', 'DELETE', 'PUT', 'PATCH', 'OPTIONS'], // Allow specific HTTP methods
-  credentials: true, // Allow credentials if needed
-}));
+const cors = require('cors');
+app.use(cors());
 
 app.use(express.json());
 const buildPath = path.normalize(path.join(__dirname, '../UI/dist'));
