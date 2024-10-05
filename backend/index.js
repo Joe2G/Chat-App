@@ -11,16 +11,16 @@ const path = require('path');
 const app = express();
 const server = http.createServer(app);
 const io = socketIO(server);
-const PORT = 3000;
+const PORT = 3306;
 
 // Allowed domains for CORS
 const allowedOrigins = [
   'https://joe2g.github.io',
   'https://chat-app-khaki-zeta.vercel.app',
-  'http://localhost:3000' // Allow localhost for development
+  'http://localhost:3000', // Allow localhost for development
+  'https://joe2g.github.io/Chat-App/'
 ];
 
-// Enable CORS for specific origins
 app.use(cors({
   origin: (origin, callback) => {
     if (!origin || allowedOrigins.includes(origin)) {
