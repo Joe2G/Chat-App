@@ -30,13 +30,11 @@ export default function Sidebar({ onSelectChat }) {
       const response = await fetch(`https://chat-app-khaki-zeta.vercel.app/api/chats/${chatId}`, {
         method: 'DELETE',
       });
-
-      if (!response.ok) {
-        throw new Error('Failed to delete chat');
+      if (response.ok) {
+        setUserChats((prevChats) => prevChats.filter((chat) => chat.chatId !== chatId));
+      } else {
+        console.error("Error deleting chat:", await response.json());
       }
-
-      // If the chat is successfully deleted, remove it from the userChats list
-      setUserChats((prevChats) => prevChats.filter((chat) => chat.chatId !== chatId));
     } catch (error) {
       console.error("Error deleting chat:", error);
     }
@@ -59,16 +57,9 @@ export default function Sidebar({ onSelectChat }) {
     const fetchUserChats = async () => {
       if (sender.id) {
         try {
-          const response = await fetch(`https://chat-app-khaki-zeta.vercel.app/api/users/${sender.id}/chats/last-messages`, {
-            method: 'GET',
-          });
-
-          if (!response.ok) {
-            throw new Error('Failed to fetch chats');
-          }
-
-          const result = await response.json();
-          setUserChats(result.data || []); // Handle potential empty response data
+          const response = await fetch(`https://chat-app-khaki-zeta.vercel.app/api/users/${sender.id}/chats/last-messages`);
+          const chats = await response.json();
+          setUserChats(chats);
         } catch (error) {
           console.error('Error fetching user chats:', error);
         }
