@@ -6,11 +6,14 @@ export default defineConfig({
   plugins: [react()],
   server: {
     proxy: {
-      // Only use this if you need a proxy for WebSocket connections
       '/socket.io': {
         target: 'https://chat-app-khaki-zeta.vercel.app',
         changeOrigin: true,
         ws: true,
+      },
+      '/api': {
+        target: 'https://chat-app-khaki-zeta.vercel.app',
+        changeOrigin: true,
       },
     },
   },

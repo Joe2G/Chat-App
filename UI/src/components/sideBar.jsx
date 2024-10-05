@@ -30,11 +30,13 @@ export default function Sidebar({ onSelectChat }) {
       const response = await fetch(`https://chat-app-khaki-zeta.vercel.app/api/chats/${chatId}`, {
         method: 'DELETE',
       });
-      if (response.ok) {
-        setUserChats((prevChats) => prevChats.filter((chat) => chat.chatId !== chatId));
-      } else {
-        console.error("Error deleting chat:", await response.json());
+
+      if (!response.ok) {
+        throw new Error('Failed to delete chat');
       }
+
+      // If the chat is successfully deleted, remove it from the userChats list
+      setUserChats((prevChats) => prevChats.filter((chat) => chat.chatId !== chatId));
     } catch (error) {
       console.error("Error deleting chat:", error);
     }
@@ -59,8 +61,12 @@ export default function Sidebar({ onSelectChat }) {
         try {
           const response = await fetch(`https://chat-app-khaki-zeta.vercel.app/api/users/${sender.id}/chats/last-messages`, {
             method: 'GET',
-            mode: 'no-cors',
           });
+
+          if (!response.ok) {
+            throw new Error('Failed to fetch chats');
+          }
+
           const chats = await response.json();
           setUserChats(chats);
         } catch (error) {

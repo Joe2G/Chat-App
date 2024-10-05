@@ -18,11 +18,14 @@ export default function NewChat() {
 
   const saveChat = async (chatId, userId) => {
     try {
-      await fetch('https://chat-app-khaki-zeta.vercel.app/api/chats', {
+      const response = await fetch('https://chat-app-khaki-zeta.vercel.app/api/chats', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ chatId, userId }),
       });
+
+      if (!response.ok) {
+        throw new Error('Failed to save chat');
+      }
     } catch (error) {
       console.error('Error saving chat:', error);
     }
