@@ -60,6 +60,12 @@ router.get('/users/:userId/chats/last-messages', async (req, res) => {
   try {
     const { userId } = req.params;
 
+    // Check if user exists (optional)
+    const userExists = await User.findByPk(userId);
+    if (!userExists) {
+      return res.status(404).json({ error: 'User not found' });
+    }
+
     // Fetch all chats for the user
     const chats = await Chat.findAll({ where: { userId } });
 
@@ -78,12 +84,16 @@ router.get('/users/:userId/chats/last-messages', async (req, res) => {
 
         return {
           chatId: chat.chatId,
-          lastMessage: lastMessage ? lastMessage.text : 'No messages yet.',
+          lastMessage: lastMessage ? {
+            text: lastMessage.text,
+            senderId: lastMessage.senderId,
+            timestamp: lastMessage.timestamp
+          } : { text: 'No messages yet.' },
         };
       })
     );
 
-    res.json(chatsWithLastMessages);
+    res.json({ success: true, data: chatsWithLastMessages });
   } catch (error) {
     console.error('Error fetching chats with last messages:', error);
     res.status(500).json({ error: 'Internal server error' });
