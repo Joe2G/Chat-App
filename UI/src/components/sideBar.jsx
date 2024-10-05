@@ -67,8 +67,8 @@ export default function Sidebar({ onSelectChat }) {
             throw new Error('Failed to fetch chats');
           }
 
-          const chats = await response.json();
-          setUserChats(chats);
+          const result = await response.json();
+          setUserChats(result.data || []); // Handle potential empty response data
         } catch (error) {
           console.error('Error fetching user chats:', error);
         }
