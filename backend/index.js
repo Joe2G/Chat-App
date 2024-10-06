@@ -31,6 +31,12 @@ app.use(cors({
   credentials: true,
 }));
 
+// Update the middleware to set the Access-Control-Allow-Origin header to the new URL
+app.use((req, res, next) => {
+  res.setHeader('Access-Control-Allow-Origin', 'https://joe2g.github.io');
+  next();
+});
+
 // Middleware
 app.use(express.json());
 
