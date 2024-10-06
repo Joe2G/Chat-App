@@ -18,8 +18,6 @@ const allowedOrigins = [
   'https://joe2g.github.io',
   'https://joe2g.github.io/Chat-App',
   'https://chat-app-khaki-zeta.vercel.app',
-  'http://localhost:3000',
-  'http://localhost:5173',
 ];
 
 app.use(cors({
