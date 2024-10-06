@@ -22,20 +22,17 @@ const allowedOrigins = [
 
 app.use(cors({
   origin: (origin, callback) => {
+    // Allow requests with no origin (like mobile apps, Postman, etc.) or check if origin is in the allowed list
     if (!origin || allowedOrigins.includes(origin)) {
       callback(null, true);
     } else {
       callback(new Error('Not allowed by CORS'));
     }
   },
-  credentials: true,
+  credentials: true, // Allows credentials (cookies, authorization headers, etc.)
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'], // Explicitly specify allowed methods
+  allowedHeaders: ['Content-Type', 'Authorization'], // Explicitly specify allowed headers
 }));
-
-// Update the middleware to set the Access-Control-Allow-Origin header to the new URL
-app.use((req, res, next) => {
-  res.setHeader('Access-Control-Allow-Origin', 'https://joe2g.github.io');
-  next();
-});
 
 // Middleware
 app.use(express.json());
