@@ -1,7 +1,7 @@
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import NewChat from './newChat';
-import useUsernameHook from '../hooks/usernameHook';
 import ChatAvatar from './ChatAvatar';
+import useUsernameHook from '../hooks/usernameHook';
 import useAppStore from '../stores/appStore';
 
 export default function Sidebar({ onSelectChat }) {
@@ -57,9 +57,14 @@ export default function Sidebar({ onSelectChat }) {
     const fetchUserChats = async () => {
       if (sender.id) {
         try {
-          const response = await fetch(`https://chat-app-khaki-zeta.vercel.app/api/users/${sender.id}/chats/last-messages`);
-          const chats = await response.json();
-          setUserChats(chats);
+          const url = `https://chat-app-khaki-zeta.vercel.app/api/users/${sender.id}/chats/last-messages`;
+          const response = await fetch(url);
+          if (response.ok) {
+            const chats = await response.json();
+            setUserChats(chats);
+          } else {
+            console.error('Error fetching user chats:', response.statusText);
+          }
         } catch (error) {
           console.error('Error fetching user chats:', error);
         }
