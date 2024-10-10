@@ -13,10 +13,7 @@ const port = 3000 || process.env.PORT;
 const path = require('path');
 
 app.use(cors({
-  origin: '*', // Allow all origins
-  credentials: true, // Allow credentials (cookies, authorization headers, etc.)
-  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'], // Explicitly specify allowed methods
-  allowedHeaders: ['Content-Type', 'Authorization'], // Explicitly specify allowed headers
+    origin: 'https://joe2g.github.io'
 }));
 
 app.use(express.json());
