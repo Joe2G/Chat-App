@@ -5,7 +5,7 @@ export default function ChatAvatar({ chatId }) {
   return (
     <div className="avatar">
       <div className="avatar-placeholder">
-        {chatId.charAt(0).toUpperCase()}
+        {chatId && chatId.charAt(0).toUpperCase()}
       </div>
     </div>
   );
