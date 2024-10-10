@@ -12,25 +12,11 @@ const io = socketIO(server);
 const port = 3000 || process.env.PORT;
 const path = require('path');
 
-// Allowed domains for CORS
-const allowedOrigins = [
-  'https://joe2g.github.io',
-  'https://joe2g.github.io/Chat-App',
-  'https://chat-app-khaki-zeta.vercel.app',
-];
-
 app.use(cors({
-  origin: (origin, callback) => {
-    console.log('Received Origin:', origin); // Log the received origin
-    if (!origin || allowedOrigins.includes(origin)) {
-      callback(null, true);
-    } else {
-      callback(new Error('Not allowed by CORS'));
-    }
-  },
-  credentials: true,
-  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-  allowedHeaders: ['Content-Type', 'Authorization'],
+  origin: '*', // Allow all origins
+  credentials: true, // Allow credentials (cookies, authorization headers, etc.)
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'], // Explicitly specify allowed methods
+  allowedHeaders: ['Content-Type', 'Authorization'], // Explicitly specify allowed headers
 }));
 
 app.use(express.json());
