@@ -1,17 +1,16 @@
 const express = require('express');
-const cors = require('cors');
 const http = require('http');
 const socketIO = require('socket.io');
+const { dbConnect, sequelize } = require('./config/db');
+const cors = require('cors');
 const routes = require('./routes/routes');
 const socketHandler = require('./socket/socket');
 const cronJob = require('./cron/cron');
-const { dbConnect, sequelize } = require('./config/db');
-const path = require('path');
-
 const app = express();
 const server = http.createServer(app);
 const io = socketIO(server);
 const port = 3000 || process.env.PORT;
+const path = require('path');
 
 // Allowed domains for CORS
 const allowedOrigins = [
@@ -33,21 +32,16 @@ app.use(cors({
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'], // Explicitly specify allowed methods
   allowedHeaders: ['Content-Type', 'Authorization'], // Explicitly specify allowed headers
 }));
-
-// Middleware
 app.use(express.json());
-
-// Serve static frontend files
 const buildPath = path.normalize(path.join(__dirname, '../UI/dist'));
 app.use(express.static(buildPath));
 
+// Sync the database models
+sequelize.sync()
+  .then(() => console.log('Database models synced successfully.'))
+  .catch(error => console.error('Error syncing database models:', error));
 // API routes
 app.use('/api', routes);
-
-// Serve frontend if no API route matches
-app.get('*', (req, res) => {
-  res.sendFile(path.join(buildPath, 'index.html'));
-});
 
 // Socket handling
 socketHandler(io);
