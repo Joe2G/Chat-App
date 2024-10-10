@@ -9,14 +9,19 @@ const cronJob = require('./cron/cron');
 const app = express();
 const server = http.createServer(app);
 const io = socketIO(server);
-const port = 3000 || process.env.PORT;
+
+// Ensure the port is set correctly
+const port = process.env.PORT || 3000; // Change to this
+
 const path = require('path');
 
+// CORS middleware to allow requests from specific origin
 app.use(cors({
-    origin: 'https://joe2g.github.io'
+    origin: 'https://joe2g.github.io', // Allow requests from this origin
 }));
 
 app.use(express.json());
+
 const buildPath = path.normalize(path.join(__dirname, '../UI/dist'));
 app.use(express.static(buildPath));
 
@@ -24,6 +29,7 @@ app.use(express.static(buildPath));
 sequelize.sync()
   .then(() => console.log('Database models synced successfully.'))
   .catch(error => console.error('Error syncing database models:', error));
+
 // API routes
 app.use('/api', routes);
 
@@ -36,10 +42,10 @@ cronJob();
 // Database connection and sync
 dbConnect()
   .then(() => {
-    console.log('Database models synced successfully.');
-    sequelize.sync();
+    console.log('Database connected successfully.');
+    sequelize.sync(); // Sync models after the database connection
   })
-  .catch(error => console.error('Error syncing database models:', error));
+  .catch(error => console.error('Error connecting to the database:', error));
 
 // Start the server
 server.listen(port, () => {
