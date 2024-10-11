@@ -15,6 +15,22 @@ const port = process.env.PORT || 3000;
 
 const path = require('path');
 
+// Ensure the port is set correctly
+const port = process.env.PORT || 3000;
+
+const path = require('path');
+
+// CORS middleware to allow requests from specific origin
+const corsOptions = {
+    origin: 'https://joe2g.github.io', // Replace this with the actual frontend URL
+    methods: ['GET', 'POST', 'DELETE'], // Adjust methods as necessary
+    credentials: true, // Include this if you need to support cookies or authentication
+};
+app.use(cors(corsOptions)); // Enable CORS with the specified options
+
+// Handle preflight requests for CORS
+app.options('*', cors(corsOptions)); // Enable CORS for preflight (OPTIONS) requests on all routes
+
 // CORS middleware to allow requests from specific origin
 const corsOptions = {
     origin: 'https://joe2g.github.io', // Replace this with the actual frontend URL
