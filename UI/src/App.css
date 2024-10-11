@@ -1,5 +1,6 @@
 /* General Styles */
-html, body {
+html,
+body {
   margin: 0;
   padding: 0;
   height: 100%;
@@ -29,7 +30,8 @@ html, body {
 
 /* Main Content Area */
 .main-content {
-  width: 75%; /* Default width for larger screens */
+  width: 75%;
+  /* Default width for larger screens */
   display: flex;
   flex-direction: column;
   position: relative;
@@ -45,19 +47,21 @@ html, body {
   --border-gray: #357ABD;
   --timestamp-gray: #cfefff;
   --sidebar-border: #1F1F1F;
-  --delete-color-light: #ff0000; /* Red for light mode */
-  --delete-hover-light: #cc0000; /* Darker red on hover for light mode */
-  
-  --delete-color-dark: #ff4d4d; /* Lighter red for dark mode */
-  --delete-hover-dark: #ff3333; /* Darker red on hover for dark mode */
+  --delete-color-light: #ff0000;
+  /* Red for light mode */
+  --delete-hover-light: #cc0000;
+  /* Darker red on hover for light mode */
+
+  --delete-color-dark: #ff4d4d;
+  /* Lighter red for dark mode */
+  --delete-hover-dark: #ff3333;
+  /* Darker red on hover for dark mode */
 }
 
 /* Header */
 .header {
   padding: .5rem;
-  background: linear-gradient(135deg, var(--primary-blue), var(--primary-green));
-  /* background: #1e3d58; */
-  border-bottom: 1px solid var(--border-gray);
+  background: linear-gradient(135deg, #00b4db, #0083b0);
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -78,8 +82,10 @@ body.dark-mode .header {
 
 .send-message-container {
   width: 100%;
-  position: relative; /* Ensures footer is at the bottom */
-  z-index: 1; /* Ensures it's above other content */
+  position: relative;
+  /* Ensures footer is at the bottom */
+  z-index: 1;
+  /* Ensures it's above other content */
 }
 
 /* Ensure the textarea and button are styled correctly */
@@ -114,7 +120,7 @@ body.dark-mode .header {
 }
 
 .message-bubble.sender {
-  background-color: var(--primary-blue);
+  background-color: #00b4db;
   color: var(--white);
   align-self: flex-end;
   text-align: right;
@@ -142,14 +148,6 @@ textarea {
   justify-content: center;
   align-items: center;
 }
-
-.w-1\/4 {
-  background-color: var(--sidebar-bg);
-  color: var(--sidebar-text);
-  border-color: var(--sidebar-border);
-}
-
-
 
 /* Dark Mode */
 body.dark-mode {
@@ -313,7 +311,7 @@ body.dark-mode .sidebar .flex.items-center {
   justify-content: center;
   align-items: center;
   cursor: pointer;
-  
+
   position: absolute;
   top: -1px;
   right: 0px;
@@ -323,7 +321,8 @@ body.dark-mode .sidebar .flex.items-center {
 .back-button {
   background: none;
   border: none;
-  color: #007bff; /* Blue color for the button */
+  color: #007bff;
+  /* Blue color for the button */
   cursor: pointer;
 }
 
@@ -344,10 +343,11 @@ body.dark-mode .sidebar .flex.items-center {
 
   .w-full {
     width: 100%;
-}
+  }
 
   .sidebar-hidden {
-    display: none; /* Hide sidebar on mobile when chat is selected */
+    display: none;
+    /* Hide sidebar on mobile when chat is selected */
   }
 
   .messages-container {
@@ -358,49 +358,67 @@ body.dark-mode .sidebar .flex.items-center {
     width: 100%;
     left: -.1cm;
   }
+
   .sidebar-buttons {
     position: relative;
     display: contents;
-    
+
   }
+
   .side-bar {
-  width: 100%;
+    width: 100%;
   }
+
   .modal {
     width: 95%;
     padding: 0.5rem;
-}
+  }
 }
 
 .avatar {
-  width: 40px; /* Width of the avatar */
-  height: 40px; /* Height of the avatar */
-  border-radius: 50%; /* Makes it circular */
-  background-color: #4A90E2; /* Background color */
-  display: flex; /* Center content */
-  align-items: center; /* Center vertically */
-  justify-content: center; /* Center horizontally */
-  margin-right: 10px; /* Space between avatar and text */
-  position: relative; /* Maintain position context */
-  transition: background-color 0.2s ease; /* Smooth transition for hover effect */
+  width: 40px;
+  /* Width of the avatar */
+  height: 40px;
+  /* Height of the avatar */
+  border-radius: 50%;
+  /* Makes it circular */
+  background-color: #00b4db;
+  /* Background color */
+  display: flex;
+  /* Center content */
+  align-items: center;
+  /* Center vertically */
+  justify-content: center;
+  /* Center horizontally */
+  margin-right: 10px;
+  /* Space between avatar and text */
+  position: relative;
+  /* Maintain position context */
+  transition: background-color 0.2s ease;
+  /* Smooth transition for hover effect */
 }
 
 /* Optional hover effect */
 .avatar:hover {
-  background-color: #357ABD; /* Darker shade on hover */
+  background-color: #357ABD;
+  /* Darker shade on hover */
 }
 
 /* Prevent shifting on hover or focus */
 .avatar:focus,
 .avatar:active {
-  outline: none; /* Remove outline */
+  outline: none;
+  /* Remove outline */
 }
 
 
 .avatar-placeholder {
-  color: white; /* Text color */
-  font-size: 18px; /* Font size */
-  font-weight: bold; /* Make text bold */
+  color: white;
+  /* Text color */
+  font-size: 18px;
+  /* Font size */
+  font-weight: bold;
+  /* Make text bold */
 }
 
 body.dark-mode {
@@ -417,7 +435,8 @@ body:not(.dark-mode) {
 .delete-button {
   background: none;
   border: none;
-  color: var(--delete-color); /* Use the appropriate delete color */
+  color: var(--delete-color);
+  /* Use the appropriate delete color */
   cursor: pointer;
   font-size: 1rem;
   position: absolute;
@@ -427,7 +446,10 @@ body:not(.dark-mode) {
 }
 
 .message-text {
-  white-space: nowrap; /* Prevents line breaks */
-  overflow: hidden;    /* Hides overflow */
-  text-overflow: ellipsis; /* Adds ellipsis for overflowing text */
+  white-space: nowrap;
+  /* Prevents line breaks */
+  overflow: hidden;
+  /* Hides overflow */
+  text-overflow: ellipsis;
+  /* Adds ellipsis for overflowing text */
 }

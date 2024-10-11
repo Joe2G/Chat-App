@@ -20,16 +20,20 @@ export default function NewChat() {
     try {
       const response = await fetch('https://chat-app-khaki-zeta.vercel.app/api/chats', {
         method: 'POST',
+        mode: 'no-cors',  // Add this line
+        headers: {
+          'Content-Type': 'application/json',
+        },
         body: JSON.stringify({ chatId, userId }),
       });
-
+  
       if (!response.ok) {
         throw new Error('Failed to save chat');
       }
     } catch (error) {
       console.error('Error saving chat:', error);
     }
-  };
+  };  
 
   const createCustomChatId = () => {
     setModal({
