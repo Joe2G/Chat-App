@@ -10,7 +10,6 @@ export default function Sidebar({ onSelectChat }) {
     return localStorage.getItem('darkMode') === 'true';
   });
   const { setModal } = useAppStore(); // Get setModal from app store
-
   const sender = useUsernameHook();
 
   const handleChatClick = (chatId) => {
@@ -58,7 +57,10 @@ export default function Sidebar({ onSelectChat }) {
       if (sender.id) {
         try {
           const url = `https://chat-app-khaki-zeta.vercel.app/api/users/${sender.id}/chats/last-messages`;
-          const response = await fetch(url);
+          const response = await fetch(url, {
+            method: 'GET',
+            credentials: 'include', // Ensure credentials are included (cookies, auth headers, etc.)
+          });
           if (response.ok) {
             const chats = await response.json();
             setUserChats(chats);
