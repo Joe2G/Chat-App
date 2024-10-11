@@ -11,7 +11,7 @@ const DB_PORT = 3306; // Database port
 const sequelize = new Sequelize(DB_NAME, DB_USER, DB_PASSWORD, {
   host: DB_HOST,
   port: DB_PORT,
-  dialect: 'mysql',
+  dialect: 'mysql2',
   logging: false,
   pool: {
     max: 5,
