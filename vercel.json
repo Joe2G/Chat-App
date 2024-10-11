@@ -6,18 +6,18 @@
       "use": "@vercel/node"
     }
   ],
-  "routes": [
+  "rewrites": [
     {
-      "src": "/api/(.*)",
-      "dest": "/backend/api/$1"
+      "source": "/api/(.*)",
+      "destination": "/backend/api/$1"
     },
     {
-      "src": "/socket.io/(.*)",
-      "dest": "/backend/socket.io/$1"
+      "source": "/socket.io/(.*)",
+      "destination": "/backend/socket.io/$1"
     },
     {
-      "src": "/(.*)",
-      "dest": "/backend/index.js"
+      "source": "/(.*)",
+      "destination": "/backend/index.js"
     }
   ],
   "headers": [
