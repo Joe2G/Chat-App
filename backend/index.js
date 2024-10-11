@@ -15,22 +15,6 @@ const port = process.env.PORT || 3000;
 
 const path = require('path');
 
-// Ensure the port is set correctly
-const port = process.env.PORT || 3000;
-
-const path = require('path');
-
-// CORS middleware to allow requests from specific origin
-const corsOptions = {
-    origin: 'https://joe2g.github.io', // Replace this with the actual frontend URL
-    methods: ['GET', 'POST', 'DELETE'], // Adjust methods as necessary
-    credentials: true, // Include this if you need to support cookies or authentication
-};
-app.use(cors(corsOptions)); // Enable CORS with the specified options
-
-// Handle preflight requests for CORS
-app.options('*', cors(corsOptions)); // Enable CORS for preflight (OPTIONS) requests on all routes
-
 // CORS middleware to allow requests from specific origin
 const corsOptions = {
     origin: 'https://joe2g.github.io', // Replace this with the actual frontend URL
@@ -47,15 +31,6 @@ app.use(express.json());
 const buildPath = path.normalize(path.join(__dirname, '../UI/dist'));
 app.use(express.static(buildPath));
 
-// Database connection and sync
-dbConnect()
-  .then(() => {
-    console.log('Database connected successfully.');
-    return sequelize.sync(); // Sync models after the database connection
-  })
-  .then(() => console.log('Database models synced successfully.'))
-  .catch(error => console.error('Error connecting to the database or syncing models:', error));
-
 // API routes
 app.use('/api', routes);
 
@@ -64,6 +39,14 @@ socketHandler(io);
 
 // Cron jobs
 cronJob();
+
+// Database connection and sync
+dbConnect()
+  .then(() => {
+    console.log('Database models synced successfully.');
+    sequelize.sync();
+  })
+  .catch(error => console.error('Error syncing database models:', error));
 
 // Start the server
 server.listen(port, () => {
