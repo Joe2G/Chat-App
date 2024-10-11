@@ -45,22 +45,23 @@ export default function useUsernameHook() {
 
           fetch('https://chat-app-khaki-zeta.vercel.app/api/users', {
             method: 'POST',
+            mode: 'no-cors',  // Add this line
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(newUser),
           })
-          .then(response => {
-            if (!response.ok) {
-              throw new Error('Network response was not ok');
-            }
-            return response.json();
-          })
-          .then(data => {
-            console.log('User created:', data);
-            // Optionally, handle successful user creation
-          })
-          .catch(error => {
-            console.error('Error creating user:', error);
-          });
+            .then(response => {
+              if (!response.ok) {
+                throw new Error('Network response was not ok');
+              }
+              return response.json();
+            })
+            .then(data => {
+              console.log('User created:', data);
+            })
+            .catch(error => {
+              console.error('Error creating user:', error);
+            });
+
 
           // Close the modal after entering the name
           setModal({ show: false });
