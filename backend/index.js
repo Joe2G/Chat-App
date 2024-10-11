@@ -11,16 +11,20 @@ const server = http.createServer(app);
 const io = socketIO(server);
 
 // Ensure the port is set correctly
-const port = process.env.PORT || 3000; // Change to this
+const port = process.env.PORT || 3000;
 
 const path = require('path');
 
 // CORS middleware to allow requests from specific origin
-app.use(cors({
-    origin: 'https://joe2g.github.io',
-    methods: ['GET', 'POST'], // Adjust methods as necessary
-    credentials: true // Include if you need to support cookies or authentication
-}));
+const corsOptions = {
+    origin: 'https://joe2g.github.io', // Replace this with the actual frontend URL
+    methods: ['GET', 'POST', 'DELETE'], // Adjust methods as necessary
+    credentials: true, // Include this if you need to support cookies or authentication
+};
+app.use(cors(corsOptions)); // Enable CORS with the specified options
+
+// Handle preflight requests for CORS
+app.options('*', cors(corsOptions)); // Enable CORS for preflight (OPTIONS) requests on all routes
 
 app.use(express.json());
 
