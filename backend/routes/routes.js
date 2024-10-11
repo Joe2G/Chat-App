@@ -1,9 +1,28 @@
 const express = require('express');
+const bcrypt = require('bcrypt');
 const Chat = require('../models/chat');
 const Message = require('../models/message');
 const User = require('../models/user');
 
 const router = express.Router();
+
+// Route to create a new user
+router.post('/users', async (req, res) => {
+  try {
+    const { username } = req.body;
+    const password = 'userid'; // Set the password as specified
+    if (!username) {
+      return res.status(400).json({ error: 'Username is required' });
+    }
+
+    const hashedPassword = await bcrypt.hash(password, 10); // Hash the password
+    const newUser = await User.create({ username, password: hashedPassword });
+    res.status(201).json(newUser);
+  } catch (error) {
+    console.error('Error creating user:', error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+});
 
 // Route to create a new chat
 router.post('/chats', async (req, res) => {
@@ -59,12 +78,6 @@ router.get('/users/:userId/chats', async (req, res) => {
 router.get('/users/:userId/chats/last-messages', async (req, res) => {
   try {
     const { userId } = req.params;
-
-    // Check if user exists (optional)
-    const userExists = await User.findByPk(userId);
-    if (!userExists) {
-      return res.status(404).json({ error: 'User not found' });
-    }
 
     // Fetch all chats for the user
     const chats = await Chat.findAll({ where: { userId } });

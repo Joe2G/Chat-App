@@ -1,67 +1,53 @@
 const express = require('express');
-const cors = require('cors');
 const http = require('http');
 const socketIO = require('socket.io');
+const { dbConnect, sequelize } = require('./config/db');
+const cors = require('cors');
 const routes = require('./routes/routes');
 const socketHandler = require('./socket/socket');
 const cronJob = require('./cron/cron');
-const { dbConnect, sequelize } = require('./config/db');
-const path = require('path');
-
 const app = express();
 const server = http.createServer(app);
 const io = socketIO(server);
-const port = 3000 || process.env.PORT;
 
-// Allowed domains for CORS
-const allowedOrigins = [
-  'https://joe2g.github.io',
-  'https://joe2g.github.io/Chat-App',
-  'https://chat-app-khaki-zeta.vercel.app',
-];
+// Ensure the port is set correctly
+const port = process.env.PORT || 3000;
 
-app.use(cors({
-  origin: (origin, callback) => {
-    // Allow requests with no origin (like mobile apps, Postman, etc.) or check if origin is in the allowed list
-    if (!origin || allowedOrigins.includes(origin)) {
-      callback(null, true);
-    } else {
-      callback(new Error('Not allowed by CORS'));
-    }
-  },
-  credentials: true, // Allows credentials (cookies, authorization headers, etc.)
-  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'], // Explicitly specify allowed methods
-  allowedHeaders: ['Content-Type', 'Authorization'], // Explicitly specify allowed headers
-}));
+const path = require('path');
 
-// Middleware
+// CORS middleware to allow requests from specific origin
+const corsOptions = {
+    origin: 'https://joe2g.github.io', // Replace this with the actual frontend URL
+    methods: ['GET', 'POST', 'DELETE'], // Adjust methods as necessary
+    credentials: true, // Include this if you need to support cookies or authentication
+};
+app.use(cors(corsOptions)); // Enable CORS with the specified options
+
+// Handle preflight requests for CORS
+app.options('*', cors(corsOptions)); // Enable CORS for preflight (OPTIONS) requests on all routes
+
 app.use(express.json());
 
-// Serve static frontend files
 const buildPath = path.normalize(path.join(__dirname, '../UI/dist'));
 app.use(express.static(buildPath));
 
+// Database connection and sync
+dbConnect()
+  .then(() => {
+    console.log('Database connected successfully.');
+    return sequelize.sync(); // Sync models after the database connection
+  })
+  .then(() => console.log('Database models synced successfully.'))
+  .catch(error => console.error('Error connecting to the database or syncing models:', error));
+
 // API routes
 app.use('/api', routes);
-
-// Serve frontend if no API route matches
-app.get('*', (req, res) => {
-  res.sendFile(path.join(buildPath, 'index.html'));
-});
 
 // Socket handling
 socketHandler(io);
 
 // Cron jobs
 cronJob();
-
-// Database connection and sync
-dbConnect()
-  .then(() => {
-    console.log('Database models synced successfully.');
-    sequelize.sync();
-  })
-  .catch(error => console.error('Error syncing database models:', error));
 
 // Start the server
 server.listen(port, () => {
