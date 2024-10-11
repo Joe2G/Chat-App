@@ -1,16 +1,12 @@
+require('dotenv').config();
 const { Sequelize } = require('sequelize');
 
-// Database connection details
-const DB_NAME = 'sql5735433'; // Database name
-const DB_USER = 'sql5735433'; // Database user
-const DB_PASSWORD = 'Vg4NaZUxVc'; // Database password
-const DB_HOST = 'sql5.freemysqlhosting.net'; // Database host
-const DB_PORT = 3306; // Database port
-
-// Sequelize instance
-const sequelize = new Sequelize(DB_NAME, DB_USER, DB_PASSWORD, {
-  host: DB_HOST,
-  port: DB_PORT,
+const sequelize = new Sequelize(
+  process.env.DATABASE_NAME,
+  process.env.DATABASE_USER,
+  process.env.DATABASE_PASSWORD, {
+  host: process.env.DATABASE_HOST,
+  port: process.env.DATABASE_PORT,
   dialect: 'mysql',
   logging: false,
   pool: {
