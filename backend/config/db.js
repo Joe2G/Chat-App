@@ -5,11 +5,12 @@ const { Sequelize } = require('sequelize');
 const sequelize = new Sequelize(
   process.env.DATABASE_NAME,
   process.env.DATABASE_USER,
-  process.env.DATABASE_PASSWORD, {
+  process.env.DATABASE_PASSWORD,
+  {
     host: process.env.DATABASE_HOST,
     port: process.env.DATABASE_PORT,
-    dialect: 'postgres',  // Set the dialect to postgres
-    logging: false,  // Disable logging; set to true if you want Sequelize logs
+    dialect: 'postgres', // Set the dialect to postgres
+    logging: false, // Disable logging; set to true if you want Sequelize logs
     pool: {
       max: 5,
       min: 0,
