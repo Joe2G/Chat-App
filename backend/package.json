@@ -4,7 +4,10 @@
   "main": "index.js",
   "scripts": {
     "start": "node backend/index.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "postinstall": "npm install pg"
+  },
+  "engines": {
+    "node": "20.16.0"
   },
   "dependencies": {
     "bcrypt": "^5.1.1",
