@@ -28,8 +28,8 @@ app.options('*', cors(corsOptions)); // Enable CORS for preflight (OPTIONS) requ
 
 app.use(express.json());
 
-//const buildPath = path.normalize(path.join(__dirname, '../UI/dist'));
-//app.use(express.static(buildPath));
+const buildPath = path.normalize(path.join(__dirname, '../UI/dist'));
+app.use(express.static(buildPath));
 
 // API routes
 app.use('/api', routes);
