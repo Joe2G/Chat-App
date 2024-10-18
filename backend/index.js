@@ -19,13 +19,21 @@ const path = require('path');
 const corsOptions = {
   origin: 'https://joe2g.github.io',
   methods: ['GET', 'POST', 'DELETE'],
-  allowedHeaders: ['Content-Type'], // Allow Content-Type header
+  allowedHeaders: ['Content-Type'], // Ensure this is defined
   credentials: true,
 };
-app.use(cors(corsOptions)); // Enable CORS with the specified options
+
+// Enable CORS for all routes
+app.use(cors(corsOptions));
 
 // Handle preflight requests for CORS
-app.options('*', cors(corsOptions)); // Enable CORS for preflight (OPTIONS) requests on all routes
+app.options('*', cors(corsOptions));
+
+// Set Access-Control-Allow-Headers in response
+app.use((req, res, next) => {
+  res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
+  next();
+});
 
 app.use(express.json());
 

@@ -24,7 +24,11 @@
         },
         {
           "key": "Access-Control-Allow-Methods",
-          "value": "GET, POST, DELETE"
+          "value": "GET, POST, DELETE, OPTIONS"
+        },
+        {
+          "key": "Access-Control-Allow-Headers",
+          "value": "Content-Type"
         },
         {
           "key": "Access-Control-Allow-Credentials",
