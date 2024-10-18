@@ -6,6 +6,7 @@ const cors = require('cors');
 const routes = require('./routes/routes');
 const socketHandler = require('./socket/socket');
 const cronJob = require('./cron/cron');
+const path = require('path');
 const app = express();
 const server = http.createServer(app);
 const io = socketIO(server);
@@ -13,13 +14,11 @@ const io = socketIO(server);
 // Ensure the port is set correctly
 const port = process.env.PORT || 3000;
 
-const path = require('path');
-
 // CORS middleware to allow requests from specific origin
 const corsOptions = {
   origin: 'https://joe2g.github.io',
-  methods: ['GET', 'POST', 'DELETE', 'OPTIONS'], // Added OPTIONS for preflight
-  allowedHeaders: ['Content-Type', 'Authorization'], // Include other headers if needed
+  methods: ['GET', 'POST', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization'],
   credentials: true,
 };
 
@@ -29,6 +28,7 @@ app.use(cors(corsOptions));
 // Handle preflight requests for CORS
 app.options('*', cors(corsOptions));
 
+// Middleware to parse JSON bodies
 app.use(express.json());
 
 const buildPath = path.normalize(path.join(__dirname, '../UI/dist'));
@@ -47,7 +47,7 @@ cronJob();
 dbConnect()
   .then(() => {
     console.log('Database models synced successfully.');
-    sequelize.sync();
+    return sequelize.sync();
   })
   .catch(error => console.error('Error syncing database models:', error));
 

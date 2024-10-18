@@ -26,7 +26,7 @@ export default function useUsernameHook() {
             />
           </div>
         ),
-        onClick: () => {
+        onClick: async () => {
           let usernameInput = document.getElementById('usernameInput').value.trim();
 
           // Set default name to 'User' if input is empty
@@ -43,26 +43,26 @@ export default function useUsernameHook() {
             username: newSender.name,
           };
 
-          fetch('https://chat-app-indol-tau.vercel.app/api/users', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(newUser),
-          })
-            .then(response => {
-              if (!response.ok) {
-                throw new Error(`Network response was not ok: ${response.statusText}`);
-              }
-              return response.json();
-            })
-            .then(data => {
-              console.log('User created:', data);
-            })
-            .catch(error => {
-              console.error('Error creating user:', error);
+          try {
+            const response = await fetch('https://chat-app-indol-tau.vercel.app/api/users', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify(newUser),
             });
-            
-          // Close the modal after entering the name
-          setModal({ show: false });
+
+            if (!response.ok) {
+              throw new Error(`Error creating user: ${response.statusText}`);
+            }
+
+            const data = await response.json();
+            console.log('User created:', data);
+
+            // Close the modal on success
+            setModal({ show: false });
+          } catch (error) {
+            console.error('Error creating user:', error);
+            // You can display an error message to the user here if needed
+          }
         },
       });
     }
