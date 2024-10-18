@@ -45,7 +45,6 @@ export default function useUsernameHook() {
 
           fetch('https://chat-app-indol-tau.vercel.app/api/users', {
             method: 'POST',
-            mode: 'no-cors',  // Add this line
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(newUser),
           })
@@ -61,8 +60,7 @@ export default function useUsernameHook() {
             .catch(error => {
               console.error('Error creating user:', error);
             });
-
-
+            
           // Close the modal after entering the name
           setModal({ show: false });
         },
