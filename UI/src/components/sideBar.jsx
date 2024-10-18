@@ -26,7 +26,7 @@ export default function Sidebar({ onSelectChat }) {
 
   const handleDeleteChat = async (chatId) => {
     try {
-      const response = await fetch(`https://chat-app-khaki-zeta.vercel.app/api/chats/${chatId}`, {
+      const response = await fetch(`https://chat-app-indol-tau.vercel.app/api/chats/${chatId}`, {
         method: 'DELETE',
       });
       if (response.ok) {
@@ -56,7 +56,7 @@ export default function Sidebar({ onSelectChat }) {
     const fetchUserChats = async () => {
       if (sender.id) {
         try {
-          const url = `https://chat-app-khaki-zeta.vercel.app/api/users/${sender.id}/chats/last-messages`;
+          const url = `https://chat-app-indol-tau.vercel.app/api/users/${sender.id}/chats/last-messages`;
           const response = await fetch(url, {
             method: 'GET',
             credentials: 'include', // Ensure credentials are included (cookies, auth headers, etc.)

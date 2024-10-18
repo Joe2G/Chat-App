@@ -7,12 +7,12 @@ export default defineConfig({
   server: {
     proxy: {
       '/socket.io': {
-        target: 'https://chat-app-khaki-zeta.vercel.app',
+        target: 'https://chat-app-indol-tau.vercel.app',
         changeOrigin: true,
         ws: true,
       },
       '/api': {
-        target: 'https://chat-app-khaki-zeta.vercel.app',
+        target: 'https://chat-app-indol-tau.vercel.app',
         changeOrigin: true,
       },
     },

@@ -7,7 +7,7 @@ export default function useSocketHook(chatId) {
     useEffect(() => {
         if (chatId) {
             // Use the server's URL (update this with your server URL)
-            const newSocket = io('https://chat-app-khaki-zeta.vercel.app', { query: { chatId } });
+            const newSocket = io('https://chat-app-indol-tau.vercel.app', { query: { chatId } });
 
             setSocket(newSocket);
 

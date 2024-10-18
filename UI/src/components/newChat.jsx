@@ -18,7 +18,7 @@ export default function NewChat() {
 
   const saveChat = async (chatId, userId) => {
     try {
-      const response = await fetch('https://chat-app-khaki-zeta.vercel.app/api/chats', {
+      const response = await fetch('https://chat-app-indol-tau.vercel.app/api/chats', {
         method: 'POST',
         mode: 'no-cors',  // Add this line
         headers: {

@@ -43,7 +43,7 @@ export default function useUsernameHook() {
             username: newSender.name,
           };
 
-          fetch('https://chat-app-khaki-zeta.vercel.app/api/users', {
+          fetch('https://chat-app-indol-tau.vercel.app/api/users', {
             method: 'POST',
             mode: 'no-cors',  // Add this line
             headers: { 'Content-Type': 'application/json' },
