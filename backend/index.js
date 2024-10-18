@@ -17,9 +17,10 @@ const path = require('path');
 
 // CORS middleware to allow requests from specific origin
 const corsOptions = {
-    origin: 'https://joe2g.github.io',
-    methods: ['GET', 'POST', 'DELETE'],
-    credentials: true,
+  origin: 'https://joe2g.github.io',
+  methods: ['GET', 'POST', 'DELETE'],
+  allowedHeaders: ['Content-Type'], // Allow Content-Type header
+  credentials: true,
 };
 app.use(cors(corsOptions)); // Enable CORS with the specified options
 
