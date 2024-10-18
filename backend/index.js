@@ -18,8 +18,8 @@ const path = require('path');
 // CORS middleware to allow requests from specific origin
 const corsOptions = {
   origin: 'https://joe2g.github.io',
-  methods: ['GET', 'POST', 'DELETE'],
-  allowedHeaders: ['Content-Type'], // Ensure this is defined
+  methods: ['GET', 'POST', 'DELETE', 'OPTIONS'], // Added OPTIONS for preflight
+  allowedHeaders: ['Content-Type', 'Authorization'], // Include other headers if needed
   credentials: true,
 };
 
@@ -28,12 +28,6 @@ app.use(cors(corsOptions));
 
 // Handle preflight requests for CORS
 app.options('*', cors(corsOptions));
-
-// Set Access-Control-Allow-Headers in response
-app.use((req, res, next) => {
-  res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
-  next();
-});
 
 app.use(express.json());
 

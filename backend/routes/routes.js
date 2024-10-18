@@ -82,12 +82,10 @@ router.get('/users/:userId/chats/last-messages', async (req, res) => {
     // Fetch all chats for the user
     const chats = await Chat.findAll({ where: { userId } });
 
-    // If no chats are found, return a message
     if (!chats.length) {
       return res.status(404).json({ message: 'No chats found for this user' });
     }
 
-    // For each chat, fetch the latest message
     const chatsWithLastMessages = await Promise.all(
       chats.map(async (chat) => {
         const lastMessage = await Message.findOne({
@@ -100,7 +98,7 @@ router.get('/users/:userId/chats/last-messages', async (req, res) => {
           lastMessage: lastMessage ? {
             text: lastMessage.text,
             senderId: lastMessage.senderId,
-            timestamp: lastMessage.timestamp
+            timestamp: lastMessage.timestamp,
           } : { text: 'No messages yet.' },
         };
       })
