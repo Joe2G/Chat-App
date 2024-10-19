@@ -3,15 +3,15 @@
   "rewrites": [
     {
       "source": "/api/test-connection",
-      "destination": "/backend/routes/routes.js"
+      "destination": "/api/test-connection"
     },
     {
       "source": "/socket.io/(.*)",
-      "destination": "/backend/socket/socket.js"
+      "destination": "/socket.io/(.*)"
     },
     {
       "source": "/(.*)",
-      "destination": ""  
+      "destination": "/index.html"
     }
   ],
   "headers": [
