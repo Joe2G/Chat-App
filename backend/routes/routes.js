@@ -2,19 +2,15 @@ const express = require('express');
 const bcrypt = require('bcrypt');
 const { createClient } = require('@supabase/supabase-js');
 
+const router = express.Router();
 const supabaseUrl = process.env.SUPABASE_URL;
 const supabaseKey = process.env.SUPABASE_KEY;
 const supabase = createClient(supabaseUrl, supabaseKey);
 
-const router = express.Router();
-
 // Test connection route
 router.get('/test-connection', async (req, res) => {
-  console.log('Test connection route hit');
   try {
-    const { data, error } = await supabase
-      .from('Users')
-      .select('*');
+    const { data, error } = await supabase.from('Users').select('*');
 
     if (error) {
       console.error('Error fetching users from Supabase:', error);
@@ -32,13 +28,12 @@ router.get('/test-connection', async (req, res) => {
 router.post('/users', async (req, res) => {
   try {
     const { username } = req.body;
-    const password = 'userid'; // Default password if needed
 
     if (!username) {
       return res.status(400).json({ error: 'Username is required' });
     }
 
-    const hashedPassword = await bcrypt.hash(password, 10); // Hash the password
+    const hashedPassword = await bcrypt.hash('userid', 10); // Hash the password
 
     // Insert user into Supabase
     const { data, error } = await supabase
@@ -67,7 +62,7 @@ router.post('/chats', async (req, res) => {
 
     // Insert chat into Supabase
     const { data, error } = await supabase
-      .from('Chats') // Ensure this matches your Supabase table name
+      .from('Chats')
       .insert([{ chatId, userId }]);
 
     if (error) {
@@ -89,13 +84,13 @@ router.delete('/chats/:chatId', async (req, res) => {
 
     // Delete chat from Supabase
     const { data, error } = await supabase
-      .from('Chats') // Ensure this matches your Supabase table name
+      .from('Chats')
       .delete()
       .eq('chatId', chatId);
 
     if (error) {
       console.error('Error deleting chat:', error);
-      return res.status(404).json({ error: 'Chat not found or error deleting chat' });
+      return res.status(500).json({ error: 'Internal server error' });
     }
 
     res.status(200).json({ message: 'Chat deleted successfully' });
@@ -112,7 +107,7 @@ router.get('/users/:userId/chats', async (req, res) => {
 
     // Fetch chats for the user from Supabase
     const { data, error } = await supabase
-      .from('Chats') // Ensure this matches your Supabase table name
+      .from('Chats')
       .select('*')
       .eq('userId', userId);
 
@@ -156,7 +151,7 @@ router.get('/users/:userId/chats/last-messages', async (req, res) => {
       chats.map(async (chat) => {
         // Fetch the last message for each chat
         const { data: lastMessage, error: messageError } = await supabase
-          .from('Messages') // Ensure this matches your Supabase table name
+          .from('Messages')
           .select('*')
           .eq('chatId', chat.chatId)
           .order('timestamp', { ascending: false })
