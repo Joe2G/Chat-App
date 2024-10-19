@@ -10,6 +10,7 @@ const router = express.Router();
 
 // Test connection route
 router.get('/test-connection', async (req, res) => {
+  console.log('Test connection route hit');
   try {
     const { data, error } = await supabase
       .from('Users')
