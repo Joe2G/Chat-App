@@ -2,11 +2,33 @@ const express = require('express');
 const bcrypt = require('bcrypt');
 const { createClient } = require('@supabase/supabase-js');
 
-const supabaseUrl = 'https://ctfkjrdhhrkmztzcrwub.supabase.co'
+const supabaseUrl = process.env.SUPABASE_URL;
 const supabaseKey = process.env.SUPABASE_KEY;
 const supabase = createClient(supabaseUrl, supabaseKey);
 
 const router = express.Router();
+
+// Test connection route
+router.get('/test-connection', async (req, res) => {
+  try {
+    // Query to select all users from the 'Users' table
+    const { data, error } = await supabase
+      .from('Users')  // Replace 'Users' with the actual table name if different
+      .select('*');
+
+    // Check if there was an error
+    if (error) {
+      console.error('Error fetching users from Supabase:', error);
+      return res.status(500).json({ error: 'Failed to connect to Supabase or fetch data.' });
+    }
+
+    // Return the fetched data as JSON
+    res.status(200).json(data);
+  } catch (err) {
+    console.error('Unexpected error:', err);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+});
 
 // Route to create a new user
 router.post('/users', async (req, res) => {
