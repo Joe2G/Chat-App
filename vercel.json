@@ -1,17 +1,17 @@
 {
   "version": 2,
-  "rewrites": [
+  "routes": [
     {
-      "source": "/api/(.*)",
-      "destination": "/backend/routes/routes.js"
+      "src": "/api/(.*)",
+      "dest": "/backend/index.js"
     },
     {
-      "source": "/socket.io/(.*)",
-      "destination": "/backend/socket/socket.js"
+      "src": "/socket.io/(.*)",
+      "dest": "/backend/socket/socket.js"
     },
     {
-      "source": "/(.*)",
-      "destination": "/backend/index.js"
+      "src": "/(.*)",
+      "dest": "/dist/$1"
     }
   ],
   "headers": [
