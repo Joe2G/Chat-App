@@ -11,18 +11,15 @@ const router = express.Router();
 // Test connection route
 router.get('/test-connection', async (req, res) => {
   try {
-    // Query to select all users from the 'Users' table
     const { data, error } = await supabase
-      .from('Users')  // Replace 'Users' with the actual table name if different
+      .from('Users')
       .select('*');
 
-    // Check if there was an error
     if (error) {
       console.error('Error fetching users from Supabase:', error);
       return res.status(500).json({ error: 'Failed to connect to Supabase or fetch data.' });
     }
 
-    // Return the fetched data as JSON
     res.status(200).json(data);
   } catch (err) {
     console.error('Unexpected error:', err);
