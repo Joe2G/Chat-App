@@ -3,15 +3,11 @@
   "rewrites": [
     {
       "source": "/api/(.*)",
-      "destination": "/backend/api/$1"
+      "destination": "/api/$1"
     },
     {
       "source": "/socket.io/(.*)",
-      "destination": "/backend/socket.io/$1"
-    },
-    {
-      "source": "/(.*)",
-      "destination": "/backend/index.js"
+      "destination": "/socket.io/$1"
     }
   ],
   "headers": [
@@ -28,7 +24,7 @@
         },
         {
           "key": "Access-Control-Allow-Headers",
-          "value": "Content-Type"
+          "value": "Content-Type, Authorization"
         },
         {
           "key": "Access-Control-Allow-Credentials",
