@@ -1,5 +1,6 @@
 const express = require('express');
 const bcrypt = require('bcrypt');
+require('dotenv').config();
 const { createClient } = require('@supabase/supabase-js');
 
 const router = express.Router();
