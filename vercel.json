@@ -3,11 +3,11 @@
   "rewrites": [
     {
       "source": "/api/(.*)",
-      "destination": "/backend/index.js" 
+      "destination": "/backend/api/$1"
     },
     {
       "source": "/socket.io/(.*)",
-      "destination": "/backend/socket.js"
+      "destination": "/backend/socket.io/$1"
     },
     {
       "source": "/(.*)",
