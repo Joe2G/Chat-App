@@ -11,14 +11,7 @@ const supabase = createClient(supabaseUrl, supabaseKey);
 // Test connection route
 router.get('/test-connection', async (req, res) => {
   try {
-    const { data, error } = await supabase.from('Users').select('*');
-
-    if (error) {
-      console.error('Error fetching users from Supabase:', error);
-      return res.status(500).json({ error: 'Failed to connect to Supabase or fetch data.' });
-    }
-
-    res.status(200).json(data);
+    res.status(200).send('Hello World');
   } catch (err) {
     console.error('Unexpected error:', err);
     res.status(500).json({ error: 'Internal server error' });
