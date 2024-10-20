@@ -2,16 +2,19 @@ const express = require('express');
 const http = require('http');
 const socketIO = require('socket.io');
 const cors = require('cors');
+const routes = require('./routes/routes');
+const socketHandler = require('./socket/socket');
+const cronJob = require('./cron/cron');
+const { dbConnect, sequelize } = require('./config/db');
 const path = require('path');
-require('dotenv').config();
-
 const app = express();
 const server = http.createServer(app);
 const io = socketIO(server);
+require('dotenv').config();
 
 const port = process.env.PORT || 3000;
 
-// CORS Configuration
+// CORS 
 const corsOptions = {
   origin: 'https://joe2g.github.io',
   methods: ['GET', 'POST', 'DELETE', 'OPTIONS'],
@@ -26,10 +29,22 @@ app.options('*', cors(corsOptions));
 app.use(express.json());
 app.use(express.static(path.join(__dirname, '../UI/dist')));
 
-// Test connection route
-app.get('/api/hello', (req, res) => {
-  res.status(200).send('Hello from Express!');
-});
+// API routes
+app.use('/api', routes);
+
+// Socket handling
+socketHandler(io);
+
+// Cron jobs
+cronJob();
+
+// Database connection
+dbConnect()
+  .then(() => {
+    console.log('Database models synced successfully.');
+    return sequelize.sync();
+  })
+  .catch(error => console.error('Error syncing database models:', error));
 
 // Start the server
 server.listen(port, () => {
