@@ -1,19 +1,27 @@
 {
   "version": 2,
-  "rewrites": [
+  "builds": [
     {
-      "source": "/api/(.*)",
-      "destination": "/backend/index.js"
-    },
-    {
-      "source": "/socket.io/(.*)",
-      "destination": "/backend/socket/socket.js"
-    },
-    {
-      "source": "/(.*)",
-      "destination": ""  
+      "src": "index.js",
+      "use": "@vercel/node"
     }
   ],
+  "routes": [
+    {
+      "src": "/(.*)",
+      "dest": "/index.js"
+    }
+  ],
+  "env": {
+    "SUPABASE_URL": "https://ctfkjrdhhrkmztzcrwub.supabase.co",
+    "SUPABASE_KEY": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImN0ZmtqcmRoaHJrbXp0emNyd3ViIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MjkwMTA1MjIsImV4cCI6MjA0NDU4NjUyMn0.3raIhXYp3NjkGGd1gPVo9AtNMjGqitiI7eKiskYJx-o",
+    "PORT": "3000",
+    "DATABASE_NAME": "postgres",
+    "DATABASE_USER": "postgres.ctfkjrdhhrkmztzcrwub",
+    "DATABASE_PASSWORD": "isqp?hqhqlal20?",
+    "DATABASE_HOST": "aws-0-us-east-1.pooler.supabase.com",
+    "DATABASE_PORT": "6543"
+  },
   "headers": [
     {
       "source": "/api/(.*)",
@@ -28,7 +36,7 @@
         },
         {
           "key": "Access-Control-Allow-Headers",
-          "value": "Content-Type"
+          "value": "Content-Type, Authorization"
         },
         {
           "key": "Access-Control-Allow-Credentials",
