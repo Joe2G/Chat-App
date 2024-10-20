@@ -36,7 +36,7 @@ app.use(express.json());
 app.use(express.static(path.join(__dirname, '../UI/dist')));
 
 // API routes from external routes file
-app.use('/api', routes);
+app.use('/api', router);
 
 // Socket handling
 socketHandler(io);
