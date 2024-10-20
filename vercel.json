@@ -1,17 +1,27 @@
 {
   "version": 2,
+  "builds": [
+    {
+      "src": "backend/index.js",
+      "use": "@vercel/node"
+    },
+    {
+      "src": "UI/dist/**/*",
+      "use": "@vercel/static"
+    }
+  ],
   "rewrites": [
     {
-      "source": "/api/test-connection",
-      "destination": "/api/test-connection"
+      "source": "/api/(.*)",
+      "destination": "/backend/index.js"
     },
     {
       "source": "/socket.io/(.*)",
-      "destination": "/socket.io/(.*)"
+      "destination": "/backend/socket/socket.js"
     },
     {
       "source": "/(.*)",
-      "destination": "/index.html"
+      "destination": "/UI/dist/index.html"
     }
   ],
   "headers": [
@@ -28,7 +38,7 @@
         },
         {
           "key": "Access-Control-Allow-Headers",
-          "value": "Content-Type"
+          "value": "Content-Type, Authorization"
         },
         {
           "key": "Access-Control-Allow-Credentials",
