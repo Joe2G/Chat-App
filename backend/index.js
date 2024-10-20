@@ -53,13 +53,8 @@ dbConnect()
   .catch(error => console.error('Error syncing database models:', error));
 
 // Test connection route
-app.get('/api/test-connection', async (req, res) => {
-  try {
-    res.status(200).send('Hello World');
-  } catch (err) {
-    console.error('Unexpected error:', err);
-    res.status(500).json({ error: 'Internal server error' });
-  }
+router.get('/hello', (req, res) => {
+  res.status(200).send('Hello from Express!');
 });
 
 // Route to create a new user
