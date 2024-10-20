@@ -1,15 +1,5 @@
 {
   "version": 2,
-  "builds": [
-    {
-      "src": "backend/index.js",
-      "use": "@vercel/node"
-    },
-    {
-      "src": "UI/dist/**/*",
-      "use": "@vercel/static"
-    }
-  ],
   "rewrites": [
     {
       "source": "/api/(.*)",
@@ -21,7 +11,7 @@
     },
     {
       "source": "/(.*)",
-      "destination": "/UI/dist/index.html"
+      "destination": ""  
     }
   ],
   "headers": [
@@ -38,7 +28,7 @@
         },
         {
           "key": "Access-Control-Allow-Headers",
-          "value": "Content-Type, Authorization"
+          "value": "Content-Type"
         },
         {
           "key": "Access-Control-Allow-Credentials",
