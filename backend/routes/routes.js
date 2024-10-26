@@ -4,9 +4,9 @@ require('dotenv').config();
 const { createClient } = require('@supabase/supabase-js');
 
 const router = express.Router();
-const supabaseUrl = process.env.SUPABASE_URL;
+const supabaseUrl = 'https://cdzkdgcjjloklyifybuh.supabase.co'
 const supabaseKey = process.env.SUPABASE_KEY;
-const supabase = createClient(supabaseUrl, supabaseKey);
+const supabase = createClient(supabaseUrl, supabaseKey)
 
 // Test connection route
 router.get('/test-connection', async (req, res) => {
