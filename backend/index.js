@@ -1,3 +1,20 @@
+const Sequelize = require('sequelize');
+
+// Define the dbConnect function with enhanced error handling
+async function dbConnect() {
+  try {
+    await sequelize.authenticate();
+    console.log('Database connection has been established successfully.');
+  } catch (error) {
+    if (error instanceof Sequelize.Error) {
+      console.error('Database connection error:', error.message);
+    } else {
+      console.error('Unable to connect to the database:', error.message);
+    }
+  }
+}
+
+// Your existing code snippet with the dbConnect function included
 const express = require('express');
 const http = require('http');
 const cors = require('cors');
