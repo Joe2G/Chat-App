@@ -45,7 +45,6 @@ app.get('/health', (req, res) => {
     console.log('Database models synced successfully.');
   } catch (error) {
     console.error('Error during startup:', error);
-    process.exit(1); // Exit the process on error
   }
 })();
 
