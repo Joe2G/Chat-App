@@ -57,7 +57,6 @@
     }
   ],
   "build": {
-    "outputDirectory": "UI/dist",
     "env": {
       "SUPABASE_KEY": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImN0ZmtqcmRoaHJrbXp0emNyd3ViIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTcyOTAxMDUyMiwiZXhwIjoyMDQ0NTg2NTIyfQ.lEHgtkBO_lv4KrAwMkb9HzGoCT6ISnVIhVhk4Wkg-YE",  
       "NODE_ENV": "production",
