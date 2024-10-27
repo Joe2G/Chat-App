@@ -12,17 +12,17 @@ const sequelize = new Sequelize(
     dialect: 'postgres', // Set the dialect to postgres
     logging: false, // Disable logging; set to true if you want Sequelize logs
     pool: {
-      max: 5,
+      max: 1,
       min: 0,
       acquire: 30000,
       idle: 10000,
     },
     dialectOptions: {
       ssl: {
-        require: true, // This is important for Supabase
+        require: false, // This is important for Supabase
         rejectUnauthorized: false, // This can be set to false if you're facing SSL issues
       },
-    }, // Added a comma here
+    },
   }
 );
 
