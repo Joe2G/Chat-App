@@ -7,16 +7,6 @@
         "destination": "/index.js"
       }
     ],
-    "env": {
-      "SUPABASE_URL": "https://ctfkjrdhhrkmztzcrwub.supabase.co",
-      "SUPABASE_KEY": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImNkemtkZ2Nqamxva2x5aWZ5YnVoIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTcyOTk4NDk4NCwiZXhwIjoyMDQ1NTYwOTg0fQ.TBkt1uatOww5cQCHgGNJQatcTJPA2OW9LSx9-GAc4sg",
-      "PORT": "3000",
-      "DATABASE_NAME": "postgres",
-      "DATABASE_USER": "postgres.cdzkdgcjjloklyifybuh",
-      "DATABASE_PASSWORD": "isqp?hqhqlal20?",
-      "DATABASE_HOST": "aws-0-us-east-1.pooler.supabase.com",
-      "DATABASE_PORT": "6543"
-    },
     "headers": [
       {
         "source": "/api/(.*)",
