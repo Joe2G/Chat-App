@@ -8,16 +8,14 @@ const { dbConnect, sequelize } = require('./config/db');
 const path = require('path');
 const dotenv = require('dotenv');
 
-// Load environment variables
 dotenv.config();
 
 const app = express();
 const server = http.createServer(app);
 const io = socketIO(server);
-
 const port = process.env.PORT || 3000;
 
-// CORS options
+// CORS 
 const corsOptions = {
   origin: 'https://joe2g.github.io',
   methods: ['GET', 'POST', 'DELETE', 'OPTIONS'],
@@ -25,9 +23,10 @@ const corsOptions = {
   credentials: true,
 };
 
-// Middleware
 app.use(cors(corsOptions));
 app.options('*', cors(corsOptions));
+
+// Middleware
 app.use(express.json());
 app.use(express.static(path.join(__dirname, '../UI/dist')));
 
@@ -37,6 +36,11 @@ app.use('/api', routes);
 // Socket handling
 socketHandler(io);
 
+// Health check endpoint (optional)
+app.get('/health', (req, res) => {
+  res.status(200).send('Server is healthy');
+});
+
 // Database connection
 dbConnect()
   .then(() => {
@@ -45,10 +49,12 @@ dbConnect()
   })
   .then(() => {
     console.log('Database models synced successfully.');
+    // Start the server to listen for incoming requests
+    server.listen(port, () => {
+      console.log(`Server is running on port ${port}`);
+    });
   })
-  .catch((error) => console.error('Error syncing database models:', error));
-
-// Start the server
-server.listen(port, () => {
-  console.log(`Server is running on port ${port}`);
-});
+  .catch((error) => {
+    console.error('Error syncing database models:', error);
+    process.exit(1); // Exit the process on error, if needed
+  });
