@@ -1,8 +1,8 @@
-import { Op } from 'sequelize'; // Import Op from Sequelize
-import Message from '../models/message'; // Adjust the import based on your folder structure
-import { sequelize } from '../config/db'; // Adjust the import based on your folder structure
+const { Op } = require('sequelize'); // Import Op from Sequelize
+const Message = require('../models/message'); // Adjust the import based on your folder structure
+const { sequelize } = require('../config/db'); // Adjust the import based on your folder structure
 
-export default async function handler(req, res) {
+module.exports = async function handler(req, res) {
   // Check authorization
   if (req.headers.authorization !== `Bearer ${process.env.CRON_SECRET}`) {
     return res.status(401).end('Unauthorized');
@@ -35,4 +35,4 @@ export default async function handler(req, res) {
       return res.status(500).end('Internal server error');
     }
   }
-}
+};
