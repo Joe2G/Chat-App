@@ -6,11 +6,36 @@
     {
       "source": "/api/(.*)",
       "destination": "/backend/index.js"
+    },
+    {
+      "source": "/socket.io/(.*)",
+      "destination": "/backend/index.js"
     }
   ],
   "headers": [
     {
       "source": "/api/(.*)",
+      "headers": [
+        {
+          "key": "Access-Control-Allow-Origin",
+          "value": "https://joe2g.github.io"
+        },
+        {
+          "key": "Access-Control-Allow-Methods",
+          "value": "GET, POST, DELETE, OPTIONS"
+        },
+        {
+          "key": "Access-Control-Allow-Headers",
+          "value": "Content-Type, Authorization"
+        },
+        {
+          "key": "Access-Control-Allow-Credentials",
+          "value": "true"
+        }
+      ]
+    },
+    {
+      "source": "/socket.io/(.*)",
       "headers": [
         {
           "key": "Access-Control-Allow-Origin",
