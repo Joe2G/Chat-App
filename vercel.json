@@ -1,10 +1,11 @@
 {
   "version": 2,
   "cleanUrls": true,
+  "trailingSlash": true,
   "rewrites": [
     {
       "source": "/api/(.*)",
-      "destination": "/api/index.js"
+      "destination": "/backend/index.js"
     }
   ],
   "headers": [
@@ -29,5 +30,11 @@
         }
       ]
     }
-  ]
+  ],
+  "build": {
+    "env": {
+      "SUPABASE_KEY": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImNkemtkZ2Nqamxva2x5aWZ5YnVoIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTcyOTk4NDk4NCwiZXhwIjoyMDQ1NTYwOTg0fQ.TBkt1uatOww5cQCHgGNJQatcTJPA2OW9LSx9-GAc4sg",  
+      "NODE_ENV": "production"
+    }
+  }
 }
