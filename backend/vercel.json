@@ -1,0 +1,40 @@
+{
+  "version": 2,
+  "cleanUrls": true,
+  "trailingSlash": true,
+  "rewrites": [
+    {
+      "source": "/api/(.*)",
+      "destination": "/backend/index.js"
+    }
+  ],
+  "headers": [
+    {
+      "source": "/api/(.*)",
+      "headers": [
+        {
+          "key": "Access-Control-Allow-Origin",
+          "value": "https://joe2g.github.io"
+        },
+        {
+          "key": "Access-Control-Allow-Methods",
+          "value": "GET, POST, DELETE, OPTIONS"
+        },
+        {
+          "key": "Access-Control-Allow-Headers",
+          "value": "Content-Type, Authorization"
+        },
+        {
+          "key": "Access-Control-Allow-Credentials",
+          "value": "true"
+        }
+      ]
+    }
+  ],
+  "build": {
+    "env": {
+      "SUPABASE_KEY": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImN0ZmtqcmRoaHJrbXp0emNyd3ViIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTcyOTAxMDUyMiwiZXhwIjoyMDQ0NTg2NTIyfQ.lEHgtkBO_lv4KrAwMkb9HzGoCT6ISnVIhVhk4Wkg-YE",  
+      "NODE_ENV": "production"
+    }
+  }
+}
