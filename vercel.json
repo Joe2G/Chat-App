@@ -6,10 +6,6 @@
     {
       "source": "/api/(.*)",
       "destination": "/backend/index.js"
-    },
-    {
-      "source": "/socket.io/(.*)",
-      "destination": "/backend/index.js"
     }
   ],
   "headers": [
