@@ -33,7 +33,7 @@
   ],
   "build": {
     "env": {
-      "SUPABASE_KEY": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImNkemtkZ2Nqamxva2x5aWZ5YnVoIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTcyOTk4NDk4NCwiZXhwIjoyMDQ1NTYwOTg0fQ.TBkt1uatOww5cQCHgGNJQatcTJPA2OW9LSx9-GAc4sg",  
+      "SUPABASE_KEY": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImN0ZmtqcmRoaHJrbXp0emNyd3ViIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTcyOTAxMDUyMiwiZXhwIjoyMDQ0NTg2NTIyfQ.lEHgtkBO_lv4KrAwMkb9HzGoCT6ISnVIhVhk4Wkg-YE",  
       "NODE_ENV": "production"
     }
   }
