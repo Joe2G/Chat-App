@@ -13,6 +13,8 @@ dotenv.config();
 const app = express();
 const server = http.createServer(app);
 const io = socketIO(server);
+
+// Use environment variable for port or fallback to 3000 (for local testing)
 const port = process.env.PORT || 3000;
 
 // CORS 
@@ -41,20 +43,21 @@ app.get('/health', (req, res) => {
   res.status(200).send('Server is healthy');
 });
 
-// Database connection
-dbConnect()
-  .then(() => {
+// Database connection and server start
+(async () => {
+  try {
+    await dbConnect(); // Connect to the database
     console.log('Database connection established successfully.');
-    return sequelize.sync(); // Sync Sequelize models
-  })
-  .then(() => {
+
+    await sequelize.sync(); // Sync Sequelize models
     console.log('Database models synced successfully.');
+
     // Start the server to listen for incoming requests
     server.listen(port, () => {
       console.log(`Server is running on port ${port}`);
     });
-  })
-  .catch((error) => {
-    console.error('Error syncing database models:', error);
-    process.exit(1); // Exit the process on error, if needed
-  });
+  } catch (error) {
+    console.error('Error during startup:', error);
+    process.exit(1); // Exit the process on error
+  }
+})();
