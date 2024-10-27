@@ -19,7 +19,7 @@ const sequelize = new Sequelize(
     },
     dialectOptions: {
       ssl: {
-        require: false, // This is important for Supabase
+        require: true, // This is important for Supabase
         rejectUnauthorized: false, // This can be set to false if you're facing SSL issues
       },
     },
