@@ -1,19 +1,21 @@
 const express = require('express');
 const http = require('http');
+const socketIO = require('socket.io');
 const cors = require('cors');
 const routes = require('./routes/routes');
-const { dbConnect, sequelize } = require('./config/db'); // Ensure this import is only present once
-const dotenv = require('dotenv');
-
-dotenv.config();
+const socketHandler = require('./socket/socket');
+const { dbConnect, sequelize } = require('./config/db');
+const path = require('path');
+const cron = require('node-cron'); // Import the cron library
+require('dotenv').config();
 
 const app = express();
 const server = http.createServer(app);
+const io = socketIO(server);
 
-// Use environment variable for port or fallback to 3000 (for local testing)
 const port = process.env.PORT || 3000;
 
-// CORS 
+// CORS configuration
 const corsOptions = {
   origin: 'https://joe2g.github.io',
   methods: ['GET', 'POST', 'DELETE', 'OPTIONS'],
@@ -21,32 +23,44 @@ const corsOptions = {
   credentials: true,
 };
 
+// Middleware
 app.use(cors(corsOptions));
 app.options('*', cors(corsOptions));
 
-// Middleware
 app.use(express.json());
+app.use(express.static(path.join(__dirname, '../UI/dist')));
 
 // API routes
 app.use('/api', routes);
 
-// Health check endpoint (optional)
-app.get('/health', (req, res) => {
-  res.status(200).send('Server is healthy');
-});
+// Socket handling
+socketHandler(io);
 
-// Database connection and model syncing
-(async () => {
+// Database connection
+const startServer = async () => {
   try {
-    await dbConnect(); // Connect to the database
-    console.log('Database connection established successfully.');
-
-    await sequelize.sync(); // Sync Sequelize models
+    await dbConnect();
     console.log('Database models synced successfully.');
-  } catch (error) {
-    console.error('Error during startup:', error);
-  }
-})();
+    await sequelize.sync();
 
-// Export the express app and server for use in socket handling
-module.exports = { app, server };
+    // Schedule cron job to delete old messages every day at midnight
+    cron.schedule('0 0 * * *', async () => {
+      try {
+        await deleteOldMessages(); // Call your delete function
+        console.log('Cron job executed: Old messages deleted.');
+      } catch (error) {
+        console.error('Error executing cron job:', error);
+      }
+    });
+
+    // Start the server
+    server.listen(port, () => {
+      console.log(`Server is running on port ${port}`);
+    });
+  } catch (error) {
+    console.error('Error syncing database models:', error);
+  }
+};
+
+// Start the server and database connection
+startServer();
