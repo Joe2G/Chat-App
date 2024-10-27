@@ -4,13 +4,15 @@ const socketIO = require('socket.io');
 const cors = require('cors');
 const routes = require('./routes/routes');
 const socketHandler = require('./socket/socket');
-const cronJob = require('./cron/cron');
 const { dbConnect, sequelize } = require('./config/db');
 const path = require('path');
+const dotenv = require('dotenv');
+
+dotenv.config(); // Load environment variables
+
 const app = express();
 const server = http.createServer(app);
 const io = socketIO(server);
-require('dotenv').config();
 
 const port = process.env.PORT || 3000;
 
@@ -35,16 +37,16 @@ app.use('/api', routes);
 // Socket handling
 socketHandler(io);
 
-// Cron jobs
-cronJob();
-
 // Database connection
 dbConnect()
   .then(() => {
-    console.log('Database models synced successfully.');
-    return sequelize.sync();
+    console.log('Database connection established successfully.');
+    return sequelize.sync(); // Sync Sequelize models
   })
-  .catch(error => console.error('Error syncing database models:', error));
+  .then(() => {
+    console.log('Database models synced successfully.');
+  })
+  .catch((error) => console.error('Error syncing database models:', error));
 
 // Start the server
 server.listen(port, () => {

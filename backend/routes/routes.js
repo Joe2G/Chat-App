@@ -1,12 +1,22 @@
 const express = require('express');
 const bcrypt = require('bcrypt');
-require('dotenv').config();
 const { createClient } = require('@supabase/supabase-js');
+const deleteOldMessages = require('../cron/cron'); // Import your delete function
 
 const router = express.Router();
-const supabaseUrl = 'https://ctfkjrdhhrkmztzcrwub.supabase.co'
+const supabaseUrl = 'https://ctfkjrdhhrkmztzcrwub.supabase.co';
 const supabaseKey = process.env.SUPABASE_KEY;
-const supabase = createClient(supabaseUrl, supabaseKey)
+const supabase = createClient(supabaseUrl, supabaseKey);
+
+// Route to handle the cron job
+router.post('/cron', async (req, res) => {
+  if (req.headers.authorization !== `Bearer ${process.env.CRON_SECRET}`) {
+    return res.status(401).end('Unauthorized');
+  }
+  
+  await deleteOldMessages(); // Call the function to delete old messages
+  res.status(200).end('Cron job executed successfully.');
+});
 
 // Test connection route
 router.get('/test-connection', async (req, res) => {
