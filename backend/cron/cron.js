@@ -5,14 +5,19 @@ const { sequelize } = require('../config/db');
 
 module.exports = () => {
   cron.schedule('0 * * * *', async () => {
+    console.log("Running scheduled job to delete old messages...");
+
     const twoDaysAgo = new Date();
     twoDaysAgo.setHours(twoDaysAgo.getHours() - 48);
 
     try {
+      // Check if the database connection is still valid
+      await sequelize.authenticate();
+
       const result = await Message.destroy({
         where: {
           timestamp: {
-            [Op.lt]: twoDaysAgo, // Use Op.lt instead of sequelize.Op.lt
+            [Op.lt]: twoDaysAgo, // Use Op.lt for querying
           },
         },
       });
