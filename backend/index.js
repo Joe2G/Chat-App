@@ -2,11 +2,9 @@ const express = require('express');
 const http = require('http');
 const socketIO = require('socket.io');
 const cors = require('cors');
-const routes = require('./routes/routes');
-const socketHandler = require('./socket/socket');
 const { dbConnect, sequelize } = require('./config/db');
-const path = require('path');
-const cron = require('node-cron'); // Import the cron library
+const routes = require('./api');  // Import all routes
+
 require('dotenv').config();
 
 const app = express();
@@ -28,32 +26,20 @@ app.use(cors(corsOptions));
 app.options('*', cors(corsOptions));
 
 app.use(express.json());
-app.use(express.static(path.join(__dirname, '../UI/dist')));
 
-// API routes
-app.use('/api', routes);
+// Use routes
+app.use('/api', routes); // All API routes are prefixed with /api
 
 // Socket handling
 socketHandler(io);
 
-// Database connection
+// Database connection and server start
 const startServer = async () => {
   try {
     await dbConnect();
     console.log('Database models synced successfully.');
     await sequelize.sync();
 
-    // Schedule cron job to delete old messages every day at midnight
-    cron.schedule('0 0 * * *', async () => {
-      try {
-        await deleteOldMessages(); // Call your delete function
-        console.log('Cron job executed: Old messages deleted.');
-      } catch (error) {
-        console.error('Error executing cron job:', error);
-      }
-    });
-
-    // Start the server
     server.listen(port, () => {
       console.log(`Server is running on port ${port}`);
     });
@@ -62,5 +48,5 @@ const startServer = async () => {
   }
 };
 
-// Start the server and database connection
-startServer();
+// Vercel-specific export
+module.exports = app; // Export Express app for Vercel

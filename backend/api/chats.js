@@ -1,60 +1,10 @@
 const express = require('express');
-const bcrypt = require('bcrypt');
 const { createClient } = require('@supabase/supabase-js');
-const deleteOldMessages = require('../cron/cron'); // Import your delete function
 
 const router = express.Router();
 const supabaseUrl = 'https://ctfkjrdhhrkmztzcrwub.supabase.co';
 const supabaseKey = process.env.SUPABASE_KEY;
 const supabase = createClient(supabaseUrl, supabaseKey);
-
-// Route to handle the cron job
-router.post('/cron', async (req, res) => {
-  if (req.headers.authorization !== `Bearer ${process.env.CRON_SECRET}`) {
-    return res.status(401).end('Unauthorized');
-  }
-  
-  await deleteOldMessages(); // Call the function to delete old messages
-  res.status(200).end('Cron job executed successfully.');
-});
-
-// Test connection route
-router.get('/test-connection', async (req, res) => {
-  try {
-    res.status(200).send('Hello World');
-  } catch (err) {
-    console.error('Unexpected error:', err);
-    res.status(500).json({ error: 'Internal server error' });
-  }
-});
-
-// Route to create a new user
-router.post('/users', async (req, res) => {
-  try {
-    const { username } = req.body;
-
-    if (!username) {
-      return res.status(400).json({ error: 'Username is required' });
-    }
-
-    const hashedPassword = await bcrypt.hash('userid', 10); // Hash the password
-
-    // Insert user into Supabase
-    const { data, error } = await supabase
-      .from('Users')
-      .insert([{ username, password: hashedPassword }]);
-
-    if (error) {
-      console.error('Error creating user:', error);
-      return res.status(500).json({ error: 'Error creating user in Supabase' });
-    }
-
-    res.status(201).json({ message: 'User created successfully', data });
-  } catch (error) {
-    console.error('Error creating user:', error);
-    res.status(500).json({ error: 'Internal server error' });
-  }
-});
 
 // Route to create a new chat
 router.post('/chats', async (req, res) => {
@@ -64,7 +14,6 @@ router.post('/chats', async (req, res) => {
       return res.status(400).json({ error: 'Chat ID and user ID are required' });
     }
 
-    // Insert chat into Supabase
     const { data, error } = await supabase
       .from('Chats')
       .insert([{ chatId, userId }]);
@@ -86,7 +35,6 @@ router.delete('/chats/:chatId', async (req, res) => {
   try {
     const { chatId } = req.params;
 
-    // Delete chat from Supabase
     const { data, error } = await supabase
       .from('Chats')
       .delete()
@@ -109,7 +57,6 @@ router.get('/users/:userId/chats', async (req, res) => {
   try {
     const { userId } = req.params;
 
-    // Fetch chats for the user from Supabase
     const { data, error } = await supabase
       .from('Chats')
       .select('*')
@@ -136,7 +83,6 @@ router.get('/users/:userId/chats/last-messages', async (req, res) => {
   try {
     const { userId } = req.params;
 
-    // Fetch all chats for the user
     const { data: chats, error: chatError } = await supabase
       .from('Chats')
       .select('*')
@@ -153,7 +99,6 @@ router.get('/users/:userId/chats/last-messages', async (req, res) => {
 
     const chatsWithLastMessages = await Promise.all(
       chats.map(async (chat) => {
-        // Fetch the last message for each chat
         const { data: lastMessage, error: messageError } = await supabase
           .from('Messages')
           .select('*')
